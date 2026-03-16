@@ -1,0 +1,7 @@
+{
+  "name": "Voice PM",
+  "description": "A voice-controlled coding agent for React Native.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

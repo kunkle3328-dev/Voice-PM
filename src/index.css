@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@utility animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+@utility animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #030712;
+}
