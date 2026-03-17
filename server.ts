@@ -141,9 +141,9 @@ wss.on('connection', (ws) => {
             fs.writeFileSync(filePath, content, 'utf-8');
             appState.files[args.path] = content;
             result = { status: 'File updated successfully' };
-            // Broadcast file update to all clients
+            // Broadcast file update to all clients EXCEPT the sender
             wss.clients.forEach(client => {
-              if (client.readyState === WebSocket.OPEN) {
+              if (client !== ws && client.readyState === WebSocket.OPEN) {
                 client.send(JSON.stringify({ type: 'file_updated', payload: { path: args.path, content } }));
               }
             });
@@ -153,6 +153,9 @@ wss.on('connection', (ws) => {
             result = { output: stdout, error: stderr };
           } else if (name === 'gitStatus') {
             const { stdout, stderr } = await execAsync('git status', { cwd: process.cwd() });
+            result = { output: stdout, error: stderr };
+          } else if (name === 'gitInit') {
+            const { stdout, stderr } = await execAsync('git init', { cwd: process.cwd() });
             result = { output: stdout, error: stderr };
           } else if (name === 'gitAdd') {
             const files = args.files as string[] || ['.'];
